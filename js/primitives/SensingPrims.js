@@ -261,3 +261,5 @@ SensingPrims.prototype.mouseOrSpritePosition = function(arg) {
     }
     return null;
 };
+
+module.exports = SensingPrims;

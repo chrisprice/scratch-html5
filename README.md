@@ -22,6 +22,14 @@ PHP so that the `proxy.php` file can be used to load assets from the same domain
 
 See the file `TESTING.md` for more details.
 
+You will also need to install browserify to package the script
+
+```bash
+npm install -g browserify
+browserify js/Scratch.js --standalone Scratch --debug > Scratch.js
+```
+
+The second line creates a single bundle file ```Scratch.js``` containing all the resolved dependencies of ```js/Scratch```, exposing it as a global ```window.Scratch``` and containing source maps for easy debugging.
 
 Unit Tests
 ----------

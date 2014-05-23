@@ -188,3 +188,5 @@ var showBubbleAndWait = function(b, type) {
         if (interp.checkTimer()) s.hideBubble();
     }
 };
+
+module.exports = LooksPrims;

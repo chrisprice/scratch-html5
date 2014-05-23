@@ -58,3 +58,5 @@ Timer.prototype.print = function(element) {
         console.log(text);
     }
 };
+
+module.exports = Timer;

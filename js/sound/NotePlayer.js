@@ -126,3 +126,5 @@ NotePlayer.prototype.updateEnvelope = function() {
         if (this.decayRate < 1) this.envelopeValue *= this.decayRate;
     }
 };
+
+module.exports = NotePlayer;

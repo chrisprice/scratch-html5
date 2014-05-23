@@ -22,6 +22,13 @@
 
 'use strict';
 
+var Instr = require('../soundbank/Instr'),
+    WAVFile = require('./sound/WAVFile'),
+    SoundDecoder = require('./sound/SoundDecoder'),
+    Stage = require('./Stage'),
+    Sprite = require('./Sprite'),
+    OffsetBuffer = require('./util/OffsetBuffer');
+
 var IO = function() {
     this.data = null;
     // In production, simply use the local path (no proxy)
@@ -158,3 +165,5 @@ IO.prototype.getCount = function() {
     this.spriteLayerCount++;
     return rv;
 };
+
+module.exports = IO;

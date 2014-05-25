@@ -1,4 +1,5 @@
 JSCS_PATH = ./node_modules/.bin/jscs
+BROWSERIFY_PATH = ./node_modules/.bin/browserify
 KARMA_PATH = ./node_modules/.bin/karma
 KARMA_CONFIG = ./test/fixtures/karma.conf.js
 
@@ -6,6 +7,10 @@ KARMA_CONFIG = ./test/fixtures/karma.conf.js
 lint:
 	@$(JSCS_PATH) ./js/*
 	@$(JSCS_PATH) ./test/unit/*
+
+# Package code for use in browser
+build:
+	@$(BROWSERIFY_PATH) js/Scratch.js --standalone Scratch --debug > Scratch.js
 
 # Performs unit tests
 unit:

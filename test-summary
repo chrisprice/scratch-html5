@@ -1,0 +1,12 @@
+interpreterSpec - only validates initial internal state, deleted
+ioSpec - only validates initial internal state, deleted
+looksPrimitiveSpec - tests for showBubble, refactored to use jasmine spys
+reporterSpec - tests for determineReporterLabel, refactored to use instance methods rather than global
+runtimeSpec - tests for stopAll, refactored to use jasmine spys
+
+threadSpec - validates initial internal state, deleted
+stageSpec - validates initial internal state, deleted
+
+
+DOM - stage, scratch, sprite
+initial state - runtime, reporter

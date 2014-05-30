@@ -15,17 +15,17 @@ describe('Reporter', function() {
         beforeEach(function() {
             io.spriteLayerCount = 4;
             reporter = new Reporter({
-                'cmd' : "getVar:",
-                'color' : 15629590,
-                'isDiscrete' :  true,
-                'mode' : 1,
-                'param' : "myAnswer",
-                'sliderMax' : 100,
-                'sliderMin' : 0,
-                'target' : "Stage",
-                'visible' : true,
-                'x' : 5,
-                'y' : 5
+                'cmd': "getVar:",
+                'color': 15629590,
+                'isDiscrete':  true,
+                'mode': 1,
+                'param': "myAnswer",
+                'sliderMax': 100,
+                'sliderMin': 0,
+                'target': "Stage",
+                'visible': true,
+                'x': 5,
+                'y': 5
             });
         });
 

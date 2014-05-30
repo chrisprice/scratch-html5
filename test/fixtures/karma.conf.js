@@ -1,37 +1,50 @@
-module.exports = function(config){
+module.exports = function(config) {
     config.set({
-    basePath : '../../',
+      basePath : '../../',
 
-    files : [
-      'test/artifacts/**/*.js',
-      'test/lib/**/*.js',
-      'test/unit/**/*.js',
-      'js/sound/SoundDecoder.js',
-      'js/sound/**/*.js',
-      'js/util/**/*.js',
-      'js/**/*.js',
-      'node_modules/jasmine-jquery/lib/jasmine-jquery.js',
-      'node_modules/underscore/underscore.js'
-    ],
+      // Files to browserify
+      browserify: {
+        files: [
+          'test/unit/**/*.js',
+        ]
+      },
 
-    exclude : [
-    ],
+      files : [
+        // 'test/artifacts/**/*.js',
+        'test/lib/**/*.js',
+        // 'test/unit/**/*.js',
+        // 'js/sound/SoundDecoder.js',
+        // 'js/sound/**/*.js',
+        // 'js/util/**/*.js',
+        // 'js/**/*.js',
+        'node_modules/jasmine-jquery/lib/jasmine-jquery.js',
+        'node_modules/underscore/underscore.js'
+      ],
 
-    preprocessors: {
-        '*.html': ['html2js']
-    },
+      exclude : [
+      ],
 
-    autoWatch : true,
+      preprocessors: {
+        '*.html': 'html2js',
+        '/**/*.browserify': 'browserify'
+      },
 
-    frameworks: ['jasmine'],
+      autoWatch : true,
 
-    browsers : ['Chrome'],
+      frameworks: [
+        'jasmine',
+        'browserify'
+      ],
 
-    plugins : [
-      'karma-jasmine',
-      'jasmine-jquery',
-      'karma-html2js-preprocessor',
-      'karma-chrome-launcher',
-      'karma-firefox-launcher'
-   ]
-})}
+      browsers : ['Chrome'],
+
+      plugins : [
+        'karma-jasmine',
+        'karma-browserifast',
+        'jasmine-jquery',
+        'karma-html2js-preprocessor',
+        'karma-chrome-launcher',
+        'karma-firefox-launcher'
+     ]
+  });
+}

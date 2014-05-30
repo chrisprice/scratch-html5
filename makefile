@@ -14,7 +14,7 @@ build:
 
 # Performs unit tests
 unit:
-	@$(KARMA_PATH) start $(KARMA_CONFIG) $*
+	@$(KARMA_PATH) start $(KARMA_CONFIG) $* | cat
 
 # Run all test targets
 test:

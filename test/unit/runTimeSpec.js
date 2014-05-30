@@ -15,6 +15,53 @@ describe('Runtime', function() {
         global.runtime = new Runtime();
     });
 
+    describe('Initialized variables', function() {
+
+        it('should have a scene variable', function() {
+            expect(runtime.scene).toBe(null);
+        });
+
+        it('should have a sprites array', function() {
+            expect(runtime.sprites).toEqual([]);
+        });
+
+        it('should have a reporters array', function() {
+            expect(runtime.reporters).toEqual([]);
+        });
+
+        it('should have a keysDown array', function() {
+            expect(runtime.keysDown).toEqual([]);
+        });
+
+        it('should have a mouseDown variable', function() {
+            expect(runtime.mouseDown).toBe(false);
+        });
+
+        it('should have a mousePos array', function() {
+            expect(runtime.mousePos).toEqual([0,0]);
+        });
+
+        it('should have an audioContext variable', function() {
+            expect(runtime.audioContext).toBe(null);
+        });
+
+        it('should have an audoGain variable', function() {
+            expect(runtime.audioGain).toBe(null);
+        });
+
+        it('should have an audioPlaying array', function() {
+            expect(runtime.audioPlaying).toEqual([]);
+        });
+
+        it('should have a notesPlaying array', function() {
+            expect(runtime.notesPlaying).toEqual([]);
+        });
+
+        it('should have a projectLoaded variable', function() {
+            expect(runtime.projectLoaded).toBe(false);
+        });
+    });
+
     describe('Stop All', function() {
 
         beforeEach(function() {

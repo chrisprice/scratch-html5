@@ -22,4 +22,4 @@ test:
 	@make unit
 
 # Ignore directory structure
-.PHONY: lint unit test
+.PHONY: lint build unit test

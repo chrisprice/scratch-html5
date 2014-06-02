@@ -11,37 +11,36 @@ module.exports = function(config) {
 
       files : [
         // 'test/artifacts/**/*.js',
-        'test/lib/**/*.js',
-        // 'test/unit/**/*.js',
-        // 'js/sound/SoundDecoder.js',
-        // 'js/sound/**/*.js',
-        // 'js/util/**/*.js',
-        // 'js/**/*.js',
         'node_modules/jasmine-jquery/lib/jasmine-jquery.js',
-        'node_modules/underscore/underscore.js'
+        'node_modules/underscore/underscore.js',
+        'test/lib/**/*.js',
+        'test/unit/**/*.js'
       ],
 
-      exclude : [
-      ],
+      exclude : [],
 
       preprocessors: {
         '*.html': 'html2js',
-        '/**/*.browserify': 'browserify'
+        'js/**/*.js': 'commonjs',
+        'test/unit/**/*.js': 'commonjs'
       },
 
+      // commonjsPreprocessor: {
+      //     modulesRoot: 'test/unit'
+      // },
       autoWatch : true,
 
       frameworks: [
-        'jasmine',
-        'browserify'
+        'commonjs',
+        'jasmine'
       ],
 
       browsers : ['Chrome'],
 
+      // This lot can be removed - http://karma-runner.github.io/0.12/config/plugins.html
       plugins : [
         'karma-jasmine',
-        'karma-browserifast',
-        'jasmine-jquery',
+        'karma-commonjs',
         'karma-html2js-preprocessor',
         'karma-chrome-launcher',
         'karma-firefox-launcher'

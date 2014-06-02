@@ -14,7 +14,9 @@ build:
 
 # Performs unit tests
 unit:
-	@$(KARMA_PATH) start $(KARMA_CONFIG) $* | cat
+	@$(KARMA_PATH) start $(KARMA_CONFIG) $* " "
+	# last argument fixes weirdness on windows
+	# http://comments.gmane.org/gmane.comp.gnu.make.windows/3451
 
 # Run all test targets
 test:

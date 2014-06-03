@@ -1,9 +1,9 @@
 /* jasmine specs for Sprite.js go here */
 
-var Sprite = require('../../js/Sprite');
+var Sprite = require('../../js/Sprite'),
+    Interpreter = require('../../js/Interpreter');
 
 describe('Sprite', function() {
-
     var sprite;
 
     describe('Initialized variables', function() {
@@ -92,316 +92,309 @@ describe('Sprite', function() {
         });
     })
 
-    // describe('showBubble', function() {
-    //     var spriteProto;
-    //     beforeEach(function() {
-    //         spriteProto = deepCopy(sprite.prototype);
-    //         spriteProto.visible = true;
-    //         setFixtures('<div class="bubble-container"></div>');
-    //         spriteProto.talkBubble = $('.bubble-container');
-    //         spriteProto.talkBubble.css('display', 'none');
-    //         spriteProto.talkBubbleBox = $('<div class="bubble"></div>');
-    //         spriteProto.talkBubbleStyler = $('<div class="bubble-say"></div>');
-    //         spriteProto.talkBubble.append(spriteProto.talkBubbleBox);
-    //         spriteProto.talkBubble.append(spriteProto.talkBubbleStyler);
-    //     });
+    describe('showBubble', function() {
+        beforeEach(function() {
+            sprite = new Sprite({
+                visible: true
+            });
+            setFixtures('<div class="bubble-container"></div>');
+            sprite.talkBubble = $('.bubble-container');
+            sprite.talkBubble.css('display', 'none');
+            sprite.talkBubbleBox = $('<div class="bubble"></div>');
+            sprite.talkBubbleStyler = $('<div class="bubble-say"></div>');
+            sprite.talkBubble.append(sprite.talkBubbleBox);
+            sprite.talkBubble.append(sprite.talkBubbleStyler);
+            spyOn(sprite, "getTalkBubbleXY").andReturn([50,50]);
+        });
 
-    //     describe('Say', function() {
-    //         it('should call the showBubble method on the Sprite', function() {
-    //             var text = "What to say";
-    //             spyOn(spriteProto, "getTalkBubbleXY").andReturn([50,50]);;
-    //             spriteProto.showBubble(text, "say");
-    //             expect($('.bubble').html()).toBe(text);
-    //             expect($('.bubble-say').hasClass('bubble-say')).toBe(true);
-    //             expect($('.bubble').hasClass('say-think-border')).toBe(true);
-    //             expect($('.bubble-container').css('display')).toBe('inline-block');
-    //         });
-    //     });
+        describe('Say', function() {
+            it('should call the showBubble method on the Sprite', function() {
+                var text = "What to say";
+                sprite.showBubble(text, "say");
+                expect($('.bubble').html()).toBe(text);
+                expect($('.bubble-say').hasClass('bubble-say')).toBe(true);
+                expect($('.bubble').hasClass('say-think-border')).toBe(true);
+                expect($('.bubble-container').css('display')).toBe('inline-block');
+            });
+        });
 
-    //     describe('Think', function() {
-    //         it('should call the showBubble method on the Sprite', function() {
-    //             var text = "What to think";
-    //             spyOn(spriteProto, "getTalkBubbleXY").andReturn([50,50]);;
-    //             spriteProto.showBubble(text, "think");
-    //             expect($('.bubble').html()).toBe(text);
-    //             expect($('.bubble-think').hasClass('bubble-think')).toBe(true);
-    //             expect($('.bubble').hasClass('say-think-border')).toBe(true);
-    //             expect($('.bubble-container').css('display')).toBe('inline-block');
-    //         });
-    //     });
+        describe('Think', function() {
+            it('should call the showBubble method on the Sprite', function() {
+                var text = "What to think";
+                sprite.showBubble(text, "think");
+                expect($('.bubble').html()).toBe(text);
+                expect($('.bubble-think').hasClass('bubble-think')).toBe(true);
+                expect($('.bubble').hasClass('say-think-border')).toBe(true);
+                expect($('.bubble-container').css('display')).toBe('inline-block');
+            });
+        });
 
-    //     describe('Ask', function() {
-    //         it('should call the showBubble method on the Sprite', function() {
-    //             var text = "What to Ask";
-    //             spyOn(spriteProto, "getTalkBubbleXY").andReturn([50,50]);;
-    //             spriteProto.showBubble(text, "doAsk");
-    //             expect($('.bubble').html()).toBe(text);
-    //             expect($('.bubble-ask').hasClass('bubble-ask')).toBe(true);
-    //             expect($('.bubble').hasClass('ask-border')).toBe(true);
-    //             expect($('.bubble-container').css('display')).toBe('inline-block');
-    //         });
-    //     });
+        describe('Ask', function() {
+            it('should call the showBubble method on the Sprite', function() {
+                var text = "What to Ask";
+                sprite.showBubble(text, "doAsk");
+                expect($('.bubble').html()).toBe(text);
+                expect($('.bubble-ask').hasClass('bubble-ask')).toBe(true);
+                expect($('.bubble').hasClass('ask-border')).toBe(true);
+                expect($('.bubble-container').css('display')).toBe('inline-block');
+            });
+        });
 
-    //     describe('Any Bubble with visible false', function() {
-    //         it('should call the showBubble method on the Sprite and not display it', function() {
-    //             spriteProto.visible = false;
-    //             var text = "What to Ask";
-    //             spyOn(spriteProto, "getTalkBubbleXY").andReturn([50,50]);;
-    //             spriteProto.showBubble(text, "doAsk");
-    //             expect($('.bubble').html()).toBe(text);
-    //             expect($('.bubble-ask').hasClass('bubble-ask')).toBe(true);
-    //             expect($('.bubble').hasClass('ask-border')).toBe(true);
-    //             expect($('.bubble-container').css('display')).toBe('none');
-    //         });
-    //     });
-    // });
+        describe('Any Bubble with visible false', function() {
+            it('should call the showBubble method on the Sprite and not display it', function() {
+                sprite.visible = false;
+                var text = "What to Ask";
+                sprite.showBubble(text, "doAsk");
+                expect($('.bubble').html()).toBe(text);
+                expect($('.bubble-ask').hasClass('bubble-ask')).toBe(true);
+                expect($('.bubble').hasClass('ask-border')).toBe(true);
+                expect($('.bubble-container').css('display')).toBe('none');
+            });
+        });
+    });
 
-    // describe('hideBubble', function() {
-    //     var spriteProto;
-    //     beforeEach(function() {
-    //         spriteProto = deepCopy(sprite.prototype);
-    //         setFixtures('<div class="bubble-container"></div>');
-    //         spriteProto.talkBubble = $('.bubble-container');
-    //         spriteProto.talkBubble.css('display', 'inline');
-    //     });
+    describe('hideBubble', function() {
+        var spriteProto;
+        beforeEach(function() {
+            sprite = new Sprite({});
+            setFixtures('<div class="bubble-container"></div>');
+            sprite.talkBubble = $('.bubble-container');
+            sprite.talkBubble.css('display', 'inline');
+        });
 
-    //     it('should hide the bubble', function() {
-    //         spriteProto.hideBubble();
-    //         expect($('.bubble-container').css('display')).toBe('none');
-    //         expect(spriteProto.talkBubbleOn).toBe(false);
+        it('should hide the bubble', function() {
+            sprite.hideBubble();
+            expect($('.bubble-container').css('display')).toBe('none');
+            expect(sprite.talkBubbleOn).toBe(false);
 
-    //     });
-    // });
+        });
+    });
 
-    // describe('showAsk', function() {
-    //     var spriteProto;
-    //     beforeEach(function() {
-    //         spriteProto = deepCopy(sprite.prototype);
-    //         spriteProto.visible = true;
-    //         spriteProto.z = 22;
-    //         setFixtures('<div class="ask-container"></div>');
-    //         spriteProto.askInput= $('.ask-container');
-    //         spriteProto.askInput.css('display','none');
-    //         spriteProto.askInput.css('position','relative');
-    //         spriteProto.askInputField = $('<div class="ask-input"></div>');
-    //         spriteProto.askInputTextField = $('<input type="text" class="ask-text-field"></input>');
-    //         spriteProto.askInputField.append(spriteProto.askInputTextField);
-    //         spriteProto.askInputButton = $('<div class="ask-button"></div>');
-    //         spriteProto.askInput.append(spriteProto.askInputField);
-    //         spriteProto.askInput.append(spriteProto.askInputButton);
-    //     });
+    describe('showAsk', function() {
+        beforeEach(function() {
+            sprite = new Sprite({
+                visible: true
+            });
+            sprite.z = 22;
+            setFixtures('<div class="ask-container"></div>');
+            sprite.askInput= $('.ask-container');
+            sprite.askInput.css('display','none');
+            sprite.askInput.css('position','relative');
+            sprite.askInputField = $('<div class="ask-input"></div>');
+            sprite.askInputTextField = $('<input type="text" class="ask-text-field"></input>');
+            sprite.askInputField.append(sprite.askInputTextField);
+            sprite.askInputButton = $('<div class="ask-button"></div>');
+            sprite.askInput.append(sprite.askInputField);
+            sprite.askInput.append(sprite.askInputButton);
+        });
 
-    //     it('should show the ask input if visible is true', function() {
-    //         spriteProto.showAsk();
-    //         expect($('.ask-container').css('display')).toBe('inline-block');
-    //         expect($('.ask-container').css('z-index')).toBe('22');
-    //         expect($('.ask-container').css('left')).toBe('15px');
-    //         expect($('.ask-container').css('right')).toBe('15px');
-    //         expect($('.ask-container').css('bottom')).toBe('7px');
-    //         expect($('.ask-container').css('height')).toBe('25px');
-    //         expect($('.ask-container').css('height')).toBe('25px');
-    //         expect(
-    //             $('.ask-text-field').is(':focus') ||
-    //             document.activeElement.className.match(/ask-text-field/) !== null
-    //         ).toBe(true);
-    //         expect(spriteProto.askInputOn).toBe(true);
-    //     });
+        it('should show the ask input if visible is true', function() {
+            sprite.showAsk();
+            expect($('.ask-container').css('display')).toBe('inline-block');
+            expect($('.ask-container').css('z-index')).toBe('22');
+            expect($('.ask-container').css('left')).toBe('15px');
+            expect($('.ask-container').css('right')).toBe('15px');
+            expect($('.ask-container').css('bottom')).toBe('7px');
+            expect($('.ask-container').css('height')).toBe('25px');
+            expect($('.ask-container').css('height')).toBe('25px');
+            expect(
+                $('.ask-text-field').is(':focus') ||
+                document.activeElement.className.match(/ask-text-field/) !== null
+            ).toBe(true);
+            expect(sprite.askInputOn).toBe(true);
+        });
 
-    //     it('should not show the ask input if visible is false', function() {
-    //         spriteProto.visible = false;
-    //         spriteProto.showAsk();
-    //         expect($('.ask-container').css('display')).toBe('none');
-    //         expect(
-    //             $('.ask-text-field').is(':focus') ||
-    //             document.activeElement.className.match(/ask-text-field/) !== null
-    //         ).toBe(false);
-    //     });
-    // });
+        it('should not show the ask input if visible is false', function() {
+            sprite.visible = false;
+            sprite.showAsk();
+            expect($('.ask-container').css('display')).toBe('none');
+            expect(
+                $('.ask-text-field').is(':focus') ||
+                document.activeElement.className.match(/ask-text-field/) !== null
+            ).toBe(false);
+        });
+    });
 
-    // describe('hideAsk', function() {
-    //     var spriteProto;
-    //     beforeEach(function() {
-    //         spriteProto = deepCopy(sprite.prototype);
-    //         setFixtures('<div class="ask-container"></div>');
-    //         spriteProto.askInput = $('.ask-container');
-    //         spriteProto.askInputTextField = $('<input type="text" class="ask-text-field"></input>');
-    //         spriteProto.askInputTextField.val("Delete Me");
-    //         spriteProto.askInput.css('display', 'inline');
-    //     });
+    describe('hideAsk', function() {
+        beforeEach(function() {
+            sprite = new Sprite({});
+            setFixtures('<div class="ask-container"></div>');
+            sprite.askInput = $('.ask-container');
+            sprite.askInputTextField = $('<input type="text" class="ask-text-field"></input>');
+            sprite.askInputTextField.val("Delete Me");
+            sprite.askInput.css('display', 'inline');
+        });
 
-    //     it('should hide the ask input', function() {
-    //         spriteProto.hideAsk();
-    //         expect($('.ask-container').css('display')).toBe('none');
-    //         expect(spriteProto.askInputOn).toBe(false);
-    //         expect(spriteProto.askInputTextField.val()).toBe('');
-    //     });
-    // });
+        it('should hide the ask input', function() {
+            sprite.hideAsk();
+            expect($('.ask-container').css('display')).toBe('none');
+            expect(sprite.askInputOn).toBe(false);
+            expect(sprite.askInputTextField.val()).toBe('');
+        });
+    });
 
-    // describe('bindAsk', function() {
-    //     beforeEach(function() {
-    //         spriteProto = deepCopy(sprite.prototype);
-    //         spriteProto.askInputTextField = $('<input type="text" class="ask-text-field"></input>');
-    //         spriteProto.askInputButton = $('<div class="ask-button"></div>');
-    //         spyOn(spriteProto, "hideBubble");
-    //         spyOn(spriteProto, "hideAsk");
-    //     });
+    describe('bindAsk', function() {
+        beforeEach(function() {
+            global.interp = new Interpreter();
+            spyOn(interp, "targetStage").andReturn({});
+            sprite = new Sprite({});
+            sprite.askInputTextField = $('<input type="text" class="ask-text-field"></input>');
+            sprite.askInputButton = $('<div class="ask-button"></div>');
+            spyOn(sprite, "hideBubble");
+            spyOn(sprite, "hideAsk");
+        });
 
-    //     it('should bind to the askInputButton and handle a click', function() {
-    //         interp = new interpreterMock();
-    //         spyOn(interp, "targetStage").andCallThrough();
-    //         $(spriteProto.askInputTextField).val('Hellow World');
-    //         spriteProto.bindDoAskButton();
-    //         $(spriteProto.askInputButton).click();
-    //         expect(interp.targetStage).toHaveBeenCalled();
-    //     });
+        it('should bind to the askInputButton and handle a click', function() {
+            $(sprite.askInputTextField).val('Hellow World');
+            sprite.bindDoAskButton();
+            $(sprite.askInputButton).click();
+            expect(interp.targetStage).toHaveBeenCalled();
+        });
 
-    //     it('should bind to the askInputButton and handle a enter/return', function() {
-    //         interp = new interpreterMock();
-    //         spyOn(interp, "targetStage").andCallThrough();
-    //         spriteProto.bindDoAskButton();
-    //         var e = $.Event( "keypress", { which: 13 } );
-    //         $(spriteProto.askInputButton).trigger(e);
-    //         expect(interp.targetStage).toHaveBeenCalled();
-    //     });
+        it('should bind to the askInputButton and handle a enter/return', function() {
+            sprite.bindDoAskButton();
+            var e = $.Event( "keypress", { which: 13 } );
+            $(sprite.askInputButton).trigger(e);
+            expect(interp.targetStage).toHaveBeenCalled();
+        });
 
 
-    //     it('should call hideBubble', function() {
-    //         spriteProto.bindDoAskButton();
-    //         $(spriteProto.askInputButton).click();
-    //         expect(spriteProto.hideBubble).toHaveBeenCalled();
-    //         expect(spriteProto.hideAsk).toHaveBeenCalled();
-    //     });
+        it('should call hideBubble', function() {
+            sprite.bindDoAskButton();
+            $(sprite.askInputButton).click();
+            expect(sprite.hideBubble).toHaveBeenCalled();
+            expect(sprite.hideAsk).toHaveBeenCalled();
+        });
 
-    //     it('should call hideAsk', function() {
-    //         spriteProto.bindDoAskButton();
-    //         $(spriteProto.askInputButton).click();
-    //         expect(spriteProto.hideAsk).toHaveBeenCalled();
-    //     });
+        it('should call hideAsk', function() {
+            sprite.bindDoAskButton();
+            $(sprite.askInputButton).click();
+            expect(sprite.hideAsk).toHaveBeenCalled();
+        });
 
-    //     it('should have interp.activeThread.paused be false', function() {
-    //         interp = new interpreterMock();
-    //         spriteProto.bindDoAskButton();
-    //         $(spriteProto.askInputButton).click();
-    //         expect(interp.activeThread.paused).toBe(false);
-    //     });
-    // });
+        it('should have interp.activeThread.paused be false', function() {
+            sprite.bindDoAskButton();
+            $(sprite.askInputButton).click();
+            expect(interp.activeThread.paused).toBe(false);
+        });
+    });
 
-    // describe('updateLayer', function() {
-    //     var spriteProto;
-    //     beforeEach(function() {
-    //         spriteProto = deepCopy(sprite.prototype);
-    //         setFixtures('<img class="mesh"></img><div class="bubble-container"></div><div class="ask-container"></div>');
-    //         spriteProto.talkBubble = $('.bubble-container');
-    //         spriteProto.talkBubble.css('position', 'relative');
-    //         spriteProto.askInput = $('.ask-container');
-    //         spriteProto.askInput.css('position', 'relative');
-    //         spriteProto.mesh = $('.mesh');
-    //         spriteProto.mesh.css('position', 'relative');
-    //         spriteProto.z = 22;
-    //     });
+    describe('updateLayer', function() {
+        var sprite;
+        beforeEach(function() {
+            sprite = new Sprite({});
+            setFixtures('<img class="mesh"></img><div class="bubble-container"></div><div class="ask-container"></div>');
+            sprite.talkBubble = $('.bubble-container');
+            sprite.talkBubble.css('position', 'relative');
+            sprite.askInput = $('.ask-container');
+            sprite.askInput.css('position', 'relative');
+            sprite.mesh = $('.mesh');
+            sprite.mesh.css('position', 'relative');
+            sprite.z = 22;
+        });
 
-    //     it('should update the mesh z-index', function() {
-    //         expect($('.mesh').css('z-index')).toBe('auto');
-    //         spriteProto.updateLayer();
-    //         expect($('.mesh').css('z-index')).toBe('22');
-    //     });
+        it('should update the mesh z-index', function() {
+            expect($('.mesh').css('z-index')).toBe('auto');
+            sprite.updateLayer();
+            expect($('.mesh').css('z-index')).toBe('22');
+        });
 
-    //     it('should update the talkBubble z-index', function() {
-    //         expect($('.bubble-container').css('z-index')).toBe('auto');
-    //         spriteProto.updateLayer();
-    //         expect($('.bubble-container').css('z-index')).toBe('22');
-    //     });
+        it('should update the talkBubble z-index', function() {
+            expect($('.bubble-container').css('z-index')).toBe('auto');
+            sprite.updateLayer();
+            expect($('.bubble-container').css('z-index')).toBe('22');
+        });
 
-    //     it('should update the askInput z-index', function() {
-    //         expect($('.ask-container').css('z-index')).toBe('auto');
-    //         spriteProto.updateLayer();
-    //         expect($('.ask-container').css('z-index')).toBe('22');
-    //     });
-    // });
+        it('should update the askInput z-index', function() {
+            expect($('.ask-container').css('z-index')).toBe('auto');
+            sprite.updateLayer();
+            expect($('.ask-container').css('z-index')).toBe('22');
+        });
+    });
 
-    // describe('updateVisible', function() {
-    //     var spriteProto;
-    //     beforeEach(function() {
-    //         spriteProto = deepCopy(sprite.prototype);
-    //         setFixtures('<img class="mesh"></img><div class="bubble-container"></div><div class="ask-container"></div>');
-    //         spriteProto.talkBubble = $('.bubble-container');
-    //         spriteProto.talkBubble.css('display', 'none');
-    //         spriteProto.askInput = $('.ask-container');
-    //         spriteProto.askInput.css('display', 'none');
-    //         spriteProto.mesh = $('.mesh');
-    //         spriteProto.mesh.css('display', 'none');
-    //     });
+    describe('updateVisible', function() {
+        var sprite;
+        beforeEach(function() {
+            sprite = new Sprite({});
+            setFixtures('<img class="mesh"></img><div class="bubble-container"></div><div class="ask-container"></div>');
+            sprite.talkBubble = $('.bubble-container');
+            sprite.talkBubble.css('display', 'none');
+            sprite.askInput = $('.ask-container');
+            sprite.askInput.css('display', 'none');
+            sprite.mesh = $('.mesh');
+            sprite.mesh.css('display', 'none');
+        });
 
-    //     describe('mesh', function() {
-    //         it('should update the mesh display on false', function() {
-    //             expect($('.mesh').css('display')).toBe('none');
-    //             spriteProto.visible = false;
-    //             spriteProto.updateVisible();
-    //             expect($('.mesh').css('display')).toBe('none');
-    //         });
+        describe('mesh', function() {
+            it('should update the mesh display on false', function() {
+                expect($('.mesh').css('display')).toBe('none');
+                sprite.visible = false;
+                sprite.updateVisible();
+                expect($('.mesh').css('display')).toBe('none');
+            });
 
-    //         it('should update the mesh display on true', function() {
-    //             expect($('.mesh').css('display')).toBe('none');
-    //             spriteProto.visible = true;
-    //             spriteProto.updateVisible();
-    //             expect($('.mesh').css('display')).toBe('inline');
-    //         });
+            it('should update the mesh display on true', function() {
+                expect($('.mesh').css('display')).toBe('none');
+                sprite.visible = true;
+                sprite.updateVisible();
+                expect($('.mesh').css('display')).toBe('inline');
+            });
 
-    //     });
+        });
 
-    //     describe('talkBubble', function() {
-    //         it('should update the talkBubble on talkBubble true and visible true', function() {
-    //             expect($('.bubble-container').css('display')).toBe('none');
-    //             spriteProto.talkBubbleOn = true;
-    //             spriteProto.visible = true;
-    //             spriteProto.updateVisible();
-    //             expect($('.bubble-container').css('display')).toBe('inline-block');
-    //         });
+        describe('talkBubble', function() {
+            it('should update the talkBubble on talkBubble true and visible true', function() {
+                expect($('.bubble-container').css('display')).toBe('none');
+                sprite.talkBubbleOn = true;
+                sprite.visible = true;
+                sprite.updateVisible();
+                expect($('.bubble-container').css('display')).toBe('inline-block');
+            });
 
-    //         it('should update the talkBubble on talkBubble false and visible true', function() {
-    //             expect($('.bubble-container').css('display')).toBe('none');
-    //             spriteProto.talkBubbleOn = false;
-    //             spriteProto.visible = true;
-    //             spriteProto.updateVisible();
-    //             expect($('.bubble-container').css('display')).toBe('none');
-    //         });
+            it('should update the talkBubble on talkBubble false and visible true', function() {
+                expect($('.bubble-container').css('display')).toBe('none');
+                sprite.talkBubbleOn = false;
+                sprite.visible = true;
+                sprite.updateVisible();
+                expect($('.bubble-container').css('display')).toBe('none');
+            });
 
-    //         it('should update the talkBubble on talkBubble true and visible false', function() {
-    //             expect($('.bubble-container').css('display')).toBe('none');
-    //             spriteProto.talkBubbleOn = true;
-    //             spriteProto.visible = false;
-    //             spriteProto.updateVisible();
-    //             expect($('.bubble-container').css('display')).toBe('none');
-    //         });
-    //     });
+            it('should update the talkBubble on talkBubble true and visible false', function() {
+                expect($('.bubble-container').css('display')).toBe('none');
+                sprite.talkBubbleOn = true;
+                sprite.visible = false;
+                sprite.updateVisible();
+                expect($('.bubble-container').css('display')).toBe('none');
+            });
+        });
 
-    //     describe('askContainer', function() {
-    //         it('should update the askInput on askInput true and visible true', function() {
-    //             expect($('.ask-container').css('display')).toBe('none');
-    //             spriteProto.askInputOn = true;
-    //             spriteProto.visible = true;
-    //             spriteProto.updateVisible();
-    //             expect($('.ask-container').css('display')).toBe('inline-block');
-    //         });
+        describe('askContainer', function() {
+            it('should update the askInput on askInput true and visible true', function() {
+                expect($('.ask-container').css('display')).toBe('none');
+                sprite.askInputOn = true;
+                sprite.visible = true;
+                sprite.updateVisible();
+                expect($('.ask-container').css('display')).toBe('inline-block');
+            });
 
-    //         it('should update the askInput on askInput false and visible true', function() {
-    //             expect($('.ask-container').css('display')).toBe('none');
-    //             spriteProto.askInputOn = false;
-    //             spriteProto.visible = true;
-    //             spriteProto.updateVisible();
-    //             expect($('.ask-container').css('display')).toBe('none');
-    //         });
+            it('should update the askInput on askInput false and visible true', function() {
+                expect($('.ask-container').css('display')).toBe('none');
+                sprite.askInputOn = false;
+                sprite.visible = true;
+                sprite.updateVisible();
+                expect($('.ask-container').css('display')).toBe('none');
+            });
 
-    //         it('should update the askInput on askInput true and visible false', function() {
-    //             expect($('.ask-container').css('display')).toBe('none');
-    //             spriteProto.askInputOn = true;
-    //             spriteProto.visible = false;
-    //             spriteProto.updateVisible();
-    //             expect($('.ask-container').css('display')).toBe('none');
-    //         });
-    //     });
+            it('should update the askInput on askInput true and visible false', function() {
+                expect($('.ask-container').css('display')).toBe('none');
+                sprite.askInputOn = true;
+                sprite.visible = false;
+                sprite.updateVisible();
+                expect($('.ask-container').css('display')).toBe('none');
+            });
+        });
 
-    // });
+    });
 
     describe('setVisible', function() {
 

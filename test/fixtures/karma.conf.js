@@ -17,8 +17,8 @@ module.exports = function(config) {
 
       preprocessors: {
         '*.html': 'html2js',
-        'js/**/*.js': 'browserify',
-        'soundbank/Instr.js': 'browserify',
+        // 'js/**/*.js': 'browserify',
+        // 'soundbank/Instr.js': 'browserify',
         'test/unit/**/*.js': 'browserify'
       },
 

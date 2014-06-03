@@ -2,17 +2,14 @@ module.exports = function(config) {
     config.set({
       basePath : '../../',
 
-      // Files to browserify
+      // Options to browserify
       browserify: {
-        files: [
-          'test/unit/**/*.js',
-        ]
+        debug: true,
+        watch: true // Watches dependencies only (Karma watches the tests)
       },
 
       files : [
-        // 'test/artifacts/**/*.js',
         'node_modules/jasmine-jquery/lib/jasmine-jquery.js',
-        'node_modules/underscore/underscore.js',
         'test/lib/**/*.js',
         'test/unit/**/*.js'
       ],
@@ -21,29 +18,18 @@ module.exports = function(config) {
 
       preprocessors: {
         '*.html': 'html2js',
-        'js/**/*.js': 'commonjs',
-        'test/unit/**/*.js': 'commonjs'
+        'js/**/*.js': 'browserify',
+        'soundbank/Instr.js': 'browserify',
+        'test/unit/**/*.js': 'browserify'
       },
 
-      // commonjsPreprocessor: {
-      //     modulesRoot: 'test/unit'
-      // },
-      autoWatch : true,
+      autoWatch : true, // Watches tests only (Browserify watches the source)
 
       frameworks: [
-        'commonjs',
+        'browserify',
         'jasmine'
       ],
 
-      browsers : ['Chrome'],
-
-      // This lot can be removed - http://karma-runner.github.io/0.12/config/plugins.html
-      plugins : [
-        'karma-jasmine',
-        'karma-commonjs',
-        'karma-html2js-preprocessor',
-        'karma-chrome-launcher',
-        'karma-firefox-launcher'
-     ]
+      browsers : ['Chrome']
   });
 }

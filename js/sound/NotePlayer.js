@@ -25,6 +25,8 @@
 // may also be looped so that it can be sustained and it may have a volume envelope
 // to control the attack and decay of the note.
 
+var SoundDecoder = require('./SoundDecoder');
+
 var NotePlayer = function(wavFileData, originalPitch, loopStart, loopEnd, env) {
     this.originalPitch = originalPitch || null;
     this.index = 0;

@@ -22,7 +22,8 @@
 'use strict';
 
 var Color = require('./util/Color'),
-    Rectangle = require('./util/Rectangle');
+    Rectangle = require('./util/Rectangle'),
+    $ = require('jquery');
 
 var Sprite = function(data) {
     if (!this.data) {

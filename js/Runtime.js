@@ -25,7 +25,8 @@ var Thread = require('./Interpreter').Thread,
     SoundPrims = require('./primitives/SoundPrims'),
     Instr = require('../soundbank/Instr'),
     Sprite = require('./Sprite'),
-    Timer = require('./util/Timer');
+    Timer = require('./util/Timer'),
+    $ = require('jquery');
 
 var t = new Timer();
 

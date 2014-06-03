@@ -10,7 +10,6 @@ module.exports = function(config) {
 
       files : [
         'node_modules/jasmine-jquery/lib/jasmine-jquery.js',
-        'test/lib/**/*.js',
         'test/unit/**/*.js'
       ],
 

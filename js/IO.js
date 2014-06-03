@@ -27,7 +27,8 @@ var Instr = require('../soundbank/Instr'),
     SoundDecoder = require('./sound/SoundDecoder'),
     Stage = require('./Stage'),
     Sprite = require('./Sprite'),
-    OffsetBuffer = require('./util/OffsetBuffer');
+    OffsetBuffer = require('./util/OffsetBuffer'),
+    $ = require('jquery');
 
 var IO = function() {
     this.data = null;

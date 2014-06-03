@@ -24,7 +24,8 @@
 
 var Interpreter = require('./Interpreter'),
     Runtime = require('./Runtime'),
-    IO = require('./IO');
+    IO = require('./IO'),
+    $ = require('jquery');
 
 var iosAudioActive = false;
 function Scratch(project_id) {

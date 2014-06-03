@@ -21,7 +21,8 @@
 
 'use strict';
 
-var Sprite = require('./Sprite');
+var Sprite = require('./Sprite'),
+    $ = require('jquery');
 
 var Stage = function(data) {
     // Place the background layer in the very back.

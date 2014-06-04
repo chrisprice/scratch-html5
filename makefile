@@ -3,6 +3,9 @@ BROWSERIFY_PATH = ./node_modules/.bin/browserify
 KARMA_PATH = ./node_modules/.bin/karma
 KARMA_CONFIG = ./test/fixtures/karma.conf.js
 
+# Quoted last argument fixes weirdness on windows
+# http://comments.gmane.org/gmane.comp.gnu.make.windows/3451
+
 # Performs code governance (lint + style) test
 lint:
 	@$(JSCS_PATH) ./js/*
@@ -14,9 +17,7 @@ build:
 
 # Performs unit tests
 unit:
-	@$(KARMA_PATH) start $(KARMA_CONFIG) $* " "
-	# last argument fixes weirdness on windows
-	# http://comments.gmane.org/gmane.comp.gnu.make.windows/3451
+	@$(KARMA_PATH) start $(KARMA_CONFIG) "$*"
 
 # Run all test targets
 test:

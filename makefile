@@ -14,11 +14,11 @@ lint:
 
 # Package code for use in browser
 build:
-	@$(BROWSERIFY_PATH) js/Scratch.js --standalone Scratch --outfile "Scratch.js"
+	@$(BROWSERIFY_PATH) js/Scratch.js --standalone Scratch --transform brfs --outfile "Scratch.js"
 
 # Auto-package code for use in browser
 watch:
-	@$(WATCHIFY_PATH) js/Scratch.js --standalone Scratch --debug --outfile "Scratch.js"
+	@$(WATCHIFY_PATH) js/Scratch.js --standalone Scratch --transform brfs --debug --outfile "Scratch.js"
 
 # Performs unit tests
 unit:

@@ -30,8 +30,9 @@ var Thread = require('./Interpreter').Thread,
 
 var t = new Timer();
 
-var Runtime = function() {
-    this.scene = null;
+var Runtime = function(dom) {
+    this.dom = dom;
+    this.scene = dom.contentContainer;
     this.sprites = [];
     this.reporters = [];
     this.keysDown = {};
@@ -46,7 +47,6 @@ var Runtime = function() {
 
 // Initializer for the drawing and audio contexts.
 Runtime.prototype.init = function() {
-    this.scene = $('#container');
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     this.audioContext = new AudioContext();
     try {
@@ -77,7 +77,7 @@ Runtime.prototype.loadStart = function() {
         setTimeout(function(runtime) { runtime.loadStart(); }, 50, this);
         return;
     }
-    $('#preloader').css('display', 'none');
+    this.dom.preloader.hide();
     setInterval(this.step, 33);
     this.projectLoaded = true;
 };

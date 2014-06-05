@@ -2,7 +2,7 @@
    all CSS selectors would be descendants of #wrapper so that the player
    is embeddable.
 */
-#player-container {
+.scratch-player-container {
     position: relative;
     width: 482px;
     padding: 48px;
@@ -21,7 +21,7 @@
 }
 
 /*  Control bar above the stage */
-#player-header {
+.scratch-player-header {
     width: 480px;
     height: 38px;
     position: relative;
@@ -37,7 +37,7 @@
 }
 
 /* Button styling */
-#player-header button {
+.scratch-player-header-button {
     border: 0;
     background: center center no-repeat;
     width: 33px;
@@ -46,7 +46,7 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
-#player-header-preload {
+.scratch-player-header-preload {
     width: 1px;
     height: 1px;
     position: absolute;
@@ -54,7 +54,7 @@
     left: -1px;
     background: url(img/fullScreenOn.png), url(img/greenFlagOn.png), url(img/stopOn.png);
 }
-button#toggle-fullscreen {
+.scratch-player-toggle-fullscreen {
     background-image: url(img/fullScreenOff.png);
     background-position: 10px 8px;
     width: 40px;
@@ -62,21 +62,21 @@ button#toggle-fullscreen {
     top: 0;
     left: 0;
 }
-button#trigger-green-flag {
+.scratch-player-trigger-green-flag {
     background-image: url(img/greenFlagOff.png);
 }
-button#trigger-green-flag:hover {
+.scratch-player-trigger-green-flag:hover {
     background-image: url(img/greenFlagOn.png);
 }
-button#trigger-stop {
+.scratch-player-trigger-stop {
     background-image: url(img/stopOff.png);
 }
-button#trigger-stop:hover {
+.scratch-player-trigger-stop:hover {
     background-image: url(img/stopOn.png);
 }
 
 /* Version number */
-#player-header-version {
+.scratch-player-header-version {
     position: absolute;
     top: 28px;
     left: 0;
@@ -87,7 +87,7 @@ button#trigger-stop:hover {
 }
 
 /* Wrapper for the Stage */
-#player-content {
+.scratch-player-content {
     position: relative;
     border: 1px solid #d1d1d1;
     border-top: 0;
@@ -96,7 +96,7 @@ button#trigger-stop:hover {
 }
 
 /* The Stage */
-#container {
+.scratch-player-content-container {
     position: absolute;
     top: 0;
     left: 0;
@@ -107,7 +107,7 @@ button#trigger-stop:hover {
 }
 
 /* Pane over the Stage with the green flag on startup */
-#overlay {
+.scratch-player-content-overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -118,7 +118,7 @@ button#trigger-stop:hover {
 }
 
 /* Preloader */
-#preloader {
+.scratch-player-preloader {
     position: absolute;
     z-index: 10001;
     top: 50%;
@@ -134,32 +134,32 @@ button#trigger-stop:hover {
     box-shadow: 4px 4px 6px rgba(0, 0, 0, .5);
     cursor: default;
 }
-#preloader-progress {
+.scratch-player-preloader-progress {
     margin: 24px 30px 14px 29px;
     background: rgb(185, 187, 189);
     border-radius: 5px;
     height: 22px;
 }
-#preloader-progress-bar {
+.scratch-player-preloader-progress-bar {
     height: 22px;
     background: rgb(0, 161, 216);
     border-radius: 5px;
     width: 0;
 }
-#preloader-caption,
-#preloader-details {
+.scratch-player-preloader-caption,
+.scratch-player-preloader-details {
     margin: 14px 0 0 8px;
     text-align: center;
     font-size: 18px;
     color: rgba(0, 0, 0, .65);
 }
-#preloader-details {
+.scratch-player-preloader-details {
     margin: 6px 0 0 4px;
     font-size: 12px;
 }
 
 /* iPad arrow key frame */
-.arrow {
+.scratch-player-arrow {
     position: absolute;
     top: 0;
     left: 0;
@@ -170,104 +170,32 @@ button#trigger-stop:hover {
     color: rgba(0, 0, 0, .2);
     cursor: default;
 }
-.arrow.vertical {
+.scratch-player-arrow-vertical {
     height: 48px;
 }
-.arrow.horizontal {
+.scratch-player-arrow-horizontal {
     width: 48px;
     top: 48px;
     line-height: 400px;
 }
-#right {
+.scratch-player-arrow-right {
     left: 530px;
 }
-#down {
+.scratch-player-arrow-down {
     top: 448px;
 }
-#up::before {
+.scratch-player-arrow-up::before {
     content: '\25b2';
 }
-#down::before {
+.scratch-player-arrow-down::before {
     content: '\25bc';
 }
-#left::before {
+.scratch-player-arrow-left::before {
     content: '\25c0';
 }
-#right::before {
+.scratch-player-arrow-right::before {
     content: '\25b6';
 }
-
-/* Panel for project ID input */
-#project-picker {
-    margin: 16px 0;
-    text-align: center;
-    font-size: 16px;
-    line-height: 18px;
-}
-#project-id {
-    border: 1px solid #aaa;
-    -webkit-border-radius: 0;
-    padding: 6px;
-    -webkit-box-shadow: inset 3px 3px 3px -3px rgba(0, 0, 0, .3);
-    box-shadow: inset 3px 3px 3px -3px rgba(0, 0, 0, .3);
-    background: 0;
-    margin: 0;
-    font: inherit;
-    width: 6em;
-    position: relative;
-}
-#project-id.error {
-    background: #fee;
-    -webkit-box-shadow: inset 3px 3px 3px -3px rgba(100, 0, 0, .3);
-    box-shadow: inset 3px 3px 3px -3px rgba(100, 0, 0, .3);
-}
-#project-id:focus {
-    z-index: 1;
-}
-#address-hint {
-    padding-left: 6px;
-    vertical-align: middle;
-}
-#go-project {
-    padding: 6px;
-    margin: 0;
-    border: 1px solid #aaa;
-    border-left: 0;
-    font: inherit;
-    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ddd));
-    background: -webkit-linear-gradient(#fff, #ddd);
-    background: -moz-linear-gradient(#fff, #ddd);
-    background: -ms-linear-gradient(#fff, #ddd);
-    background: -o-linear-gradient(#fff, #ddd);
-    background: linear-gradient(#fff, #ddd);
-    -webkit-box-shadow: inset 0 -1px rgba(255, 255, 255, .2);
-    box-shadow: inset 0 -1px rgba(255, 255, 255, .2);
-    cursor: pointer;
-    position: relative;
-}
-#go-project:active {
-    background: -webkit-gradient(linear, left top, left bottom, from(#ddd), to(#eee));
-    background: -webkit-linear-gradient(#ddd, #eee);
-    background: -moz-linear-gradient(#ddd, #eee);
-    background: -ms-linear-gradient(#ddd, #eee);
-    background: -o-linear-gradient(#ddd, #eee);
-    background: linear-gradient(#ddd, #eee);
-    -webkit-box-shadow: inset 0 1px rgba(255, 255, 255, .3), inset 0 2px 5px rgba(0, 0, 0, .1);
-    box-shadow: inset 0 1px rgba(255, 255, 255, .3), inset 0 2px 5px rgba(0, 0, 0, .1);
-}
-
-#project-id,
-#go-project {
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
-    height: 18px;
-    vertical-align: middle;
-}
-#go-project::-moz-focus-inner {
-    border: 0;
-    padding: 0;
-}
-
 
 /* Reporter styles */
 .reporter-normal {

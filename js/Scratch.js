@@ -25,92 +25,56 @@
 var Interpreter = require('./Interpreter'),
     Runtime = require('./Runtime'),
     IO = require('./IO'),
-    $ = require('jquery');
+    $ = require('jquery'),
+    PlayerDOM = require('./PlayerDOM');
 
-var iosAudioActive = false;
-function Scratch(project_id) {
-    global.runtime = new Runtime();
+function Scratch(dom) {
+    this.dom = dom;
+}
+
+Scratch.prototype.load = function(projectId) {
+    global.runtime = new Runtime(this.dom);
     runtime.init();
 
-    $(window).keydown(function(e) {
-        runtime.keysDown[e.which] = true;
-        runtime.startKeyHats(e.which);
-    });
-
-    $(window).keyup(function(e) {
-        delete runtime.keysDown[e.which];
-    });
-
-    var address = $('#address-hint');
-    var project = $('#project-id');
-
-    // Update the project ID field
-    project.val(project_id);
-
-    // Validate project ID field
-    project.keyup(function() {
-        var n = this.value;
-
-        // Allow URL pasting
-        var e = /projects\/(\d+)/.exec(n);
-        if (e) {
-            n = this.value = e[1];
+    // Track key down events at the window level
+    this.dom.window.bind({
+        keydown: function(e) {
+            runtime.keysDown[e.which] = true;
+            runtime.startKeyHats(e.which);
+        },
+        keyup: function(e) {
+            delete runtime.keysDown[e.which];
         }
-
-        // Eventually, this will xhr to /projects/{{this.value}}/ and
-        // change color based on whether the response is 404 or 200.
-        $('#project-id, #address-hint').toggleClass('error', isNaN(n));
     });
 
-    // Focus the actual input when the user clicks on the URL hint
-    address.click(function() {
-        project.select();
-    });
-
-    var width = address.outerWidth();
-    project.css({
-        paddingLeft: width,
-        marginLeft: -width
-    });
-
-    // Go project button behavior
-    $('#go-project').click(function() {
-        window.location = '#' + parseInt($('#project-id').val());
-        window.location.reload(true);
-    });
+    // Overlay Green flag behavior
+    this.dom.contentOverlay.click(this.go.bind(this));
 
     // Green flag behavior
-    $('#trigger-green-flag, #overlay').click(function() {
-        if (!runtime.projectLoaded) return;
-        $('#overlay').css('display', 'none');
-        runtime.greenFlag()
-    });
+    this.dom.greenFlag.click(this.go.bind(this));
 
     // Stop button behavior
-    $('#trigger-stop').click(function() {
-        runtime.stopAll();
-    });
+    this.dom.stop.click(this.stop.bind(this));
 
     // Canvas container mouse events
-    $('#container').mousedown(function(e) {
-        runtime.mouseDown = true;
-        //e.preventDefault();
-    });
-
-    $('#container').mouseup(function(e) {
-        runtime.mouseDown = false;
-        //e.preventDefault();
-    });
-
-    $('#container').mousemove(function(e) {
-        var bb = this.getBoundingClientRect();
-        var absX = e.clientX - bb.left;
-        var absY = e.clientY - bb.top;
-        runtime.mousePos = [absX-240, -absY+180];
+    this.dom.root.bind({
+        mousedown: function(e) {
+            runtime.mouseDown = true;
+        },
+        mouseup: function(e) {
+            runtime.mouseDown = false;
+        },
+        mousemove: function(e) {
+            var bb = this.getBoundingClientRect();
+            var absX = e.clientX - bb.left;
+            var absY = e.clientY - bb.top;
+            runtime.mousePos = [absX-240, -absY+180];
+        }
     });
 
     // Touch events - EXPERIMENTAL
-    $(window).bind('touchstart', function(e) {
+    var iosAudioActive = false;
+    this.dom.window.bind('touchstart', function(e) {
         // On iOS, we need to activate the Web Audio API
         // with an empty sound play on the first touch event.
         if (!iosAudioActive) {
@@ -123,31 +87,59 @@ function Scratch(project_id) {
         }
     });
 
-    $('#container').bind('touchstart', function(e) {
-        runtime.mouseDown = true;
-    });
-
-    $('#container').bind('touchend', function(e) {
-        runtime.mouseDown = true;
-    });
-
-    $('#container').bind('touchmove', function(e) {
-        var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
-        var bb = this.getBoundingClientRect();
-        var absX = touch.clientX - bb.left;
-        var absY = touch.clientY - bb.top;
-        runtime.mousePos = [absX-240, -absY+180];
+    this.dom.root.bind({
+        touchstart: function(e) {
+            runtime.mouseDown = true;
+        },
+        touchend: function(e) {
+            runtime.mouseDown = true;
+        },
+        touchmove: function(e) {
+            var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+            var bb = this.getBoundingClientRect();
+            var absX = touch.clientX - bb.left;
+            var absY = touch.clientY - bb.top;
+            runtime.mousePos = [absX-240, -absY+180];
+        }
     });
 
     // Border touch events - EXPERIMENTAL
-    $('#left').bind('touchstart touchmove', function(e) { runtime.keysDown[37] = true; runtime.startKeyHats(37); });
-    $('#left').bind('touchend', function(e) { delete runtime.keysDown[37]; });
-    $('#up').bind('touchstart touchmove', function(e) { runtime.keysDown[38] = true; runtime.startKeyHats(38); });
-    $('#up').bind('touchend', function(e) { delete runtime.keysDown[38]; });
-    $('#right').bind('touchstart touchmove', function(e) { runtime.keysDown[39] = true; runtime.startKeyHats(39); });
-    $('#right').bind('touchend', function(e) { delete runtime.keysDown[39]; });
-    $('#down').bind('touchstart touchmove', function(e) { runtime.keysDown[40] = true; runtime.startKeyHats(40); });
-    $('#down').bind('touchend', function(e) { delete runtime.keysDown[40]; });
+    this.dom.leftArrow.bind({
+        'touchstart touchmove': function(e) {
+            runtime.keysDown[37] = true;
+            runtime.startKeyHats(37);
+        },
+        touchend: function(e) {
+            delete runtime.keysDown[37];
+        }
+    });
+    this.dom.upArrow.bind({
+        'touchstart touchmove': function(e) {
+            runtime.keysDown[38] = true;
+            runtime.startKeyHats(38);
+        },
+        touchend: function(e) {
+            delete runtime.keysDown[38];
+        }
+    });
+    this.dom.rightArrow.bind({
+        'touchstart touchmove': function(e) {
+            runtime.keysDown[39] = true;
+            runtime.startKeyHats(39);
+        },
+        touchend: function(e) {
+            delete runtime.keysDown[39];
+        }
+    });
+    this.dom.downArrow.bind({
+        'touchstart touchmove': function(e) {
+            runtime.keysDown[40] = true;
+            runtime.startKeyHats(40);
+        },
+        touchend: function(e) {
+            delete runtime.keysDown[40];
+        }
+    });
 
     // Load the interpreter and primitives
     global.interp = new Interpreter();
@@ -155,7 +147,27 @@ function Scratch(project_id) {
 
     // Load the requested project and go!
     global.io = new IO();
-    io.loadProject(project_id);
+    io.loadProject(projectId);
+};
+
+Scratch.prototype.go = function() {
+    if (!runtime.projectLoaded) {
+        return;
+    }
+    this.dom.contentOverlay.hide();
+    runtime.greenFlag();
+};
+
+Scratch.prototype.stop = function() {
+    runtime.stopAll();
+};
+
+Scratch.create = function(opts) {
+    var dom = new PlayerDOM();
+    dom.createElements(opts.container);
+    var scratch = new Scratch(dom);
+    scratch.load(opts.projectId)
+    return scratch;
 };
 
 module.exports = Scratch;
